@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6f7fb">
+  <meta name="description" content="Publish and discover Hive Engine tribe power leasing requests, signed on Hive.">
+  <title>Lease Engine — Power marketplace</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Lease Engine home">
+        <span class="brand-icon" aria-hidden="true">◈</span>
+        <span>lease<span class="brand-strong">engine</span><span class="brand-dot">.</span><small>HIVE ENGINE MARKETPLACE</small></span>
+      </a>
+      <nav class="top-links" aria-label="Main navigation">
+        <a class="top-link active" href="#market">Marketplace</a>
+        <a class="top-link" href="#how">How it works</a>
+        <a class="top-link" href="https://github.com/faireye-hive/lease_engine" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </nav>
+      <div class="account-area">
+        <span class="network-pill"><i></i> Hive mainnet</span>
+        <button id="account-button" class="button button-outline" type="button">◎ &nbsp; Set Hive account</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="eyebrow-mark">✦</span> THE POWER MARKETPLACE</span>
+          <h1>Your tokens.<br><span>More possibilities.</span></h1>
+          <p>Find people looking for Hive Engine token power, or post your own leasing request. Transparent, account-signed listings. No middleman holding your tokens.</p>
+          <div class="hero-buttons">
+            <button id="hero-create" class="button button-primary" type="button">＋ &nbsp; Post a lease request <span>↗</span></button>
+            <a class="button button-plain" href="#market">Explore the market →</a>
+          </div>
+          <div class="hero-footnote">◈ &nbsp; Requests are recorded on the Hive blockchain · Payments are not automated</div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+          <div class="art-grid"></div>
+          <div class="art-token token-one">LEO</div>
+          <div class="art-token token-two">POB</div>
+          <div class="art-token token-three">VYB</div>
+          <div class="art-center"><span>◈</span><small>TRIBE<br>POWER</small></div>
+          <div class="art-label label-one">DELEGATE ↗</div>
+          <div class="art-label label-two">POWER UP ↗</div>
+        </div>
+      </section>
+
+      <section class="stats-row" aria-label="Marketplace statistics">
+        <div class="stat"><div class="stat-icon">▤</div><div><small>All requests</small><strong id="stat-total">—</strong></div></div>
+        <div class="stat"><div class="stat-icon soft">◎</div><div><small>Open requests</small><strong id="stat-open">—</strong></div></div>
+        <div class="stat"><div class="stat-icon amber">⬡</div><div><small>Delegable tokens</small><strong id="stat-tokens">—</strong></div></div>
+        <div class="stat network-stat"><div class="stat-icon violet">↗</div><div><small>Blockchain index</small><strong id="stat-sync">Connecting…</strong></div></div>
+      </section>
+
+      <section class="market-section" id="market">
+        <div class="section-heading"><div><span class="section-kicker">THE MARKETPLACE</span><h2>Lease requests <span class="count-badge" id="count-badge">0</span></h2><p>Explore requests from the Hive community.</p></div><button id="section-create" class="button button-primary" type="button">＋ New request</button></div>
+        <div class="market-layout">
+          <aside class="filters" aria-label="Marketplace filters">
+            <div class="filter-head">Filters <button id="clear-filters" type="button">Clear all</button></div>
+            <label class="field-label" for="token-filter">Token</label>
+            <select id="token-filter" class="input"><option value="">All delegable tokens</option></select>
+            <label class="field-label" for="status-filter">Status</label>
+            <select id="status-filter" class="input"><option value="open">Open requests</option><option value="">All requests</option><option value="cancelled">Cancelled</option><option value="expired">Expired</option></select>
+            <label class="field-label" for="sort-filter">Sort by</label>
+            <select id="sort-filter" class="input"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="amount">Largest power amount</option></select>
+            <label class="checkbox-row"><input id="my-filter" type="checkbox"><span>My requests only</span></label>
+            <div class="filter-help"><span>🔒</span><strong>Signed, not guaranteed</strong><p>Every listing is tied to a Hive account. Terms are user proposals, not enforced contracts.</p></div>
+          </aside>
+          <div class="market-main">
+            <div class="market-toolbar"><span><span class="live-indicator"></span> Community requests</span><div><span id="result-label">Loading listings…</span><button id="refresh" class="icon-button" type="button" title="Refresh listings" aria-label="Refresh listings">↻</button></div></div>
+            <div id="alert" class="alert" role="status" hidden></div>
+            <div id="cards" class="cards" aria-live="polite"><div class="empty"><span>◌</span><h3>Loading marketplace…</h3><p>Reading public lease requests.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="how-section" id="how">
+        <div class="section-kicker">SIMPLE BY DESIGN</div><h2>How leasing requests work</h2>
+        <div class="steps">
+          <article class="step"><span class="step-number">01</span><div class="step-graphic">▤</div><h3>Post your request</h3><p>Choose a delegable tribe token, how much power you need, the period and the total payment offered.</p></article>
+          <article class="step"><span class="step-number">02</span><div class="step-graphic">◎</div><h3>Get interest</h3><p>Other Hive members can signal interest using their own signed Hive transaction.</p></article>
+          <article class="step"><span class="step-number">03</span><div class="step-graphic">⬡</div><h3>Arrange delegation</h3><p>Review terms and verify stake, delegation and payment directly on-chain. Execution is manual in this version.</p></article>
+        </div>
+      </section>
+      <div class="disclaimer"><span>⚠</span><p><strong>Early-access request board.</strong> No escrow, automatic payments, guaranteed yield, contract enforcement, or automatic undelegation. Never send funds based only on a listing or interest message. Hive Engine delegations may be revoked; token-specific undelegation cooldowns apply.</p></div>
+    </main>
+    <footer><a class="footer-brand" href="/">◈ leaseengine.</a><span>Open protocol · Built for the Hive community</span><a href="https://github.com/faireye-hive/lease_engine" target="_blank" rel="noopener noreferrer">Source code ↗</a></footer>
+  </div>
+
+  <dialog id="account-dialog" class="modal small-modal" aria-labelledby="account-title"><form id="account-form" class="modal-body">
+    <button class="modal-close" type="button" data-close aria-label="Close">×</button>
+    <span class="modal-kicker">HIVE ACCOUNT</span><h2 id="account-title">Choose your Hive account</h2>
+    <p>This is an account selector, not a wallet login. Publishing will require a separate approval in Hive Keychain.</p>
+    <label for="account-name">Hive username</label><div class="input-prefix"><span>@</span><input id="account-name" type="text" autocomplete="off" placeholder="your-account" maxlength="16" required></div>
+    <button class="button button-primary full-button" type="submit">Use this account →</button>
+    <p class="modal-note">We never ask for private keys, posting keys or passwords.</p>
+  </form></dialog>
+
+  <dialog id="request-dialog" class="modal" aria-labelledby="request-title"><form id="request-form" class="modal-body">
+    <button class="modal-close" type="button" data-close aria-label="Close">×</button>
+    <span class="modal-kicker">NEW ON-CHAIN LISTING</span><h2 id="request-title">Post a lease request</h2>
+    <p>Describe the token power you want to rent. Your Hive account must approve a public custom JSON operation.</p>
+    <div class="two-fields"><div><label for="request-token">Delegable token</label><select id="request-token" class="input" required><option value="">Loading tokens…</option></select></div><div><label for="request-amount">Power amount</label><input id="request-amount" class="input" type="text" inputmode="decimal" placeholder="1000.000" required></div></div>
+    <div class="two-fields"><div><label for="request-days">Lease duration</label><select id="request-days" class="input"><option value="7">7 days</option><option value="14">14 days</option><option value="30" selected>30 days</option><option value="60">60 days</option><option value="90">90 days</option></select></div><div><label for="request-pay">Payment token</label><select id="request-pay" class="input"><option>SWAP.HIVE</option><option>BEE</option><option>LEO</option><option>POB</option><option>VYB</option></select></div></div>
+    <label for="request-price">Total payment offered (for entire lease)</label><input id="request-price" class="input" type="text" inputmode="decimal" placeholder="5.000" required>
+    <label for="request-note">Optional note</label><textarea id="request-note" class="input" rows="3" maxlength="240" placeholder="Add context about your delegation request…"></textarea>
+    <div id="request-cooldown" class="subtle-note">Only tokens with delegation enabled can be requested.</div>
+    <div class="modal-warning">This creates a public, non-binding request. It does not transfer money or guarantee a lease.</div>
+    <button class="button button-primary full-button" id="request-submit" type="submit">Sign &amp; publish request ↗</button>
+  </form></dialog>
+
+  <dialog id="interest-dialog" class="modal small-modal" aria-labelledby="interest-title"><form id="interest-form" class="modal-body">
+    <button class="modal-close" type="button" data-close aria-label="Close">×</button><span class="modal-kicker">CONTACT THE REQUESTER</span><h2 id="interest-title">Offer your power</h2>
+    <p id="interest-summary">Your message will be recorded publicly on Hive.</p>
+    <label for="interest-note">Your message</label><textarea class="input" id="interest-note" maxlength="240" rows="4" placeholder="I have the requested stake available and would like to discuss the terms…" required></textarea>
+    <div class="modal-warning">Submitting interest is not a delegation or a contract. No payment is collected here.</div>
+    <button id="interest-submit" class="button button-primary full-button" type="submit">Sign &amp; publish interest ↗</button>
+  </form></dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
