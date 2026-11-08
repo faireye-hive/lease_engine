@@ -26,5 +26,5 @@ test('only originator can cancel and other account can offer once',()=>{
   const result=reduceEvents([mk('alice',parsed,1),mk('bob',cancel,2),mk('bob',offer,3),mk('bob',offer,4)],Date.parse(time));
   assert.equal(result[0].status,'open');
   assert.equal(result[0].interests.length,1);
-  assert.equal(reduceEvents([...result.length&&[mk('alice',parsed,1),mk('alice',cancel,2)]],Date.parse(time))[0].status,'cancelled');
+  assert.equal(reduceEvents([mk('alice',parsed,1),mk('alice',cancel,2)],Date.parse(time))[0].status,'cancelled');
 });
