@@ -105,7 +105,7 @@ async function loadRequests() {
     setText('#stat-open',data.open??0);
     setText('#count-badge',data.open??0);
     const lag=data.blocksBehind;
-    setText('#stat-sync',lag===null?'Starting index…':lag>10?'Syncing · '+lag+' blocks':'Up to date');
+    setText('#stat-sync',DEMO?'Preview only':lag===null?'Starting index…':lag>10?'Syncing · '+lag+' blocks':'Up to date');
     if (data.warning) showAlert(data.warning);
     else if(lag===null || lag>200) showAlert('The Hive indexer is catching up. Recent requests may appear after confirmation.');
     else showAlert('');
