@@ -1,4 +1,5 @@
 const APP_ID = 'lease.engine';
+const DEMO = Boolean(window.LEASE_ENGINE_DEMO);
 const $ = selector => document.querySelector(selector);
 const state = {account:localStorage.getItem('lease-engine-account') || '',tokens:[],
   requests:[], tokenError:false, selectedRequest:null, refreshing:false};
@@ -32,6 +33,7 @@ function requireAccount() {
   return false;
 }
 function keychain(payload,label) {
+  if (DEMO) return Promise.reject(Error('This is a visual demo. Live transactions require a backend deployment.'));
   return new Promise((resolve,reject)=>{
     const extension=window.hive_keychain;
     if (!extension?.requestCustomJson) return reject(Error('Hive Keychain was not detected. Install or enable the browser extension.'));
@@ -81,7 +83,8 @@ async function loadTokens() {
       node.value=original;
     }
     $('#request-token').disabled=state.tokens.length===0;
-    $('#request-submit').disabled=state.tokens.length===0;
+    $('#request-submit').disabled=state.tokens.length===0 || DEMO;
+    if(DEMO) { $('#request-submit').textContent='Visual preview — no signing'; $('#interest-submit').disabled=true; $('#interest-submit').textContent='Visual preview — no signing'; }
     updateCooldown();
   } catch(e) {
     state.tokenError=true;
@@ -208,12 +211,12 @@ function renderRequests() {
 }
 
 function openRequest() {
-  if(!requireAccount())return;
+  if(!DEMO && !requireAccount())return;
   $('#request-dialog').showModal();
   $('#request-token').focus();
 }
 function openInterest(item) {
-  if(!requireAccount())return;
+  if(!DEMO && !requireAccount())return;
   state.selectedRequest=item;
   setText('#interest-summary','Offer to delegate '+compactNumber(item.quantity)+' '+item.symbol+
     ' for '+item.days+' days to @'+item.author+'. Total proposed payment: '+item.price+' '+item.paySymbol+'.');
@@ -221,6 +224,7 @@ function openInterest(item) {
   $('#interest-dialog').showModal();
 }
 async function cancelRequest(r) {
+  if(DEMO) { toast('Cancellation is disabled in this preview.'); return; }
   if(!requireAccount() || r.author!==state.account)return;
   if(!confirm('Publish a cancellation for this request? This cannot remove the original blockchain event.'))return;
   const payload={v:1,type:'cancel',id:crypto.randomUUID(),requestId:r.id};
