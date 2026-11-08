@@ -43,6 +43,14 @@ npm run dev
 
 Local development can run without PostgreSQL, but the indexer uses memory and loses its cursor and history when restarted.
 
+## Visual preview on GitHub Pages
+
+The repo includes a GitHub Actions workflow at `.github/workflows/pages.yml` to publish the `public/` site as a **demo-only visual preview**. All listings and supported tokens in this preview are fictional; Keychain transactions and lease payments are disabled.
+
+To activate Pages, an administrator may need to open **Settings → Pages → Build and deployment → Source: GitHub Actions**. The workflow publishes the static files at `https://faireye-hive.github.io/lease_engine/` after GitHub Pages is enabled and the run succeeds.
+
+This preview has no database or API. Production functionality requires the Node.js backend below.
+
 ## Deploy on Render
 
 1. Create a managed **PostgreSQL** database and inspect its pricing/plan before proceeding.
