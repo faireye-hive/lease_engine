@@ -117,4 +117,3 @@ In this version the displayed price is the **total payment proposed for the whol
 - Hive Keychain documentation: https://github.com/hive-keychain/hive-keychain-extension/blob/master/documentation/README.md
 - Hive block API: https://developers.hive.io/apidefinitions/block-api.html
 
-MIT license.
