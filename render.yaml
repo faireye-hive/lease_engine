@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: lease-engine
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: START_BACKFILL_BLOCKS
+        value: "1200"
